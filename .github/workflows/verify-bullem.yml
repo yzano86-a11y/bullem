@@ -1,0 +1,24 @@
+name: Verify Bull 'Em
+
+on:
+  push:
+    branches: [verification-bullem]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Test shared
+        run: npm test -w shared
+      - name: Test server
+        run: npm test -w server
+      - name: Test client
+        run: npm test -w client
