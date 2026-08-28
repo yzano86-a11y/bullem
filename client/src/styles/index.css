@@ -2228,8 +2228,8 @@ html.capacitor-native .felt-bg {
   }
 
   .hand-display-large .playing-card {
-    width: 3.75rem;
-    height: 5.25rem;
+    width: 4rem;
+    height: 5.5rem;
   }
   .hand-display-large .playing-card span:first-child {
     font-size: 1.125rem;
@@ -2238,8 +2238,8 @@ html.capacitor-native .felt-bg {
     font-size: 1.375rem;
   }
   .hand-display-large .hand-card-back {
-    width: 3.75rem;
-    height: 5.25rem;
+    width: 4rem;
+    height: 5.5rem;
   }
 
   /* -- Home page: compact for phone landscape -- */
