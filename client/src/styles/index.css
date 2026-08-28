@@ -414,8 +414,8 @@ html.capacitor-native .felt-bg {
 
 /* Larger cards in the player's own hand */
 .hand-display-large .playing-card {
-  width: 3.25rem;
-  height: 4.5rem;
+  width: 4rem;
+  height: 5.5rem;
 }
 .hand-display-large .playing-card span:first-child {
   font-size: 1rem;
@@ -466,8 +466,8 @@ html.capacitor-native .felt-bg {
 
 /* Large hand card backs match the large card size */
 .hand-display-large .hand-card-back {
-  width: 3.25rem;
-  height: 4.5rem;
+  width: 4rem;
+  height: 5.5rem;
 }
 
 .playing-card-small {
