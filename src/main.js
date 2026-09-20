@@ -1,11 +1,17 @@
 import "./style.css";
-
-const games=[{name:"طرنيب",icon:"🃏",status:"قريباً"},{name:"بلوت",icon:"♠️",status:"قريباً"},{name:"تركس",icon:"♦️",status:"قريباً"},{name:"هاند",icon:"♥️",status:"قريباً"}];
-
-document.querySelector("#app").innerHTML=`
-<header class="top"><div class="brand">👑 <span>الملوك</span></div><button class="login">دخول</button></header>
-<main>
-<section class="hero"><div><p class="eyebrow">مملكة الألعاب</p><h1>أهلاً بك في <strong>الملوك</strong></h1><p>منصة ألعاب اجتماعية جديدة، نبنيها من الصفر لتكون سريعة، جميلة، ومصممة للعب الجماعي.</p><button class="primary">ابدأ اللعب</button></div><div class="crown">♛</div></section>
-<section><div class="section-title"><h2>الألعاب</h2><span>قريباً المزيد</span></div><div class="games">${games.map(g=>`<article class="game"><div class="game-icon">${g.icon}</div><h3>${g.name}</h3><span>${g.status}</span></article>`).join("")}</div></section>
-</main>
-<footer>الملوك © 2026</footer>`;
+const state={view:"home",rooms:[{id:"K001",name:"غرفة الملوك",game:"طرنيب",players:2,max:4},{id:"K002",name:"سهرة الأبطال",game:"طرنيب",players:1,max:4},{id:"K003",name:"تحدي سريع",game:"طرنيب",players:4,max:4}],user:null};
+const app=document.querySelector("#app");
+const card=r=>'<article class="room"><div class="room-top"><span class="badge">'+r.game+'</span><span class="'+(r.players>=r.max?"red":"green")+'">'+(r.players>=r.max?"ممتلئة":"● مفتوحة")+'</span></div><h3>'+r.name+'</h3><div class="room-meta"><span>🎴 '+r.game+'</span><span>👥 '+r.players+'/'+r.max+'</span><span>#'+r.id+'</span></div><button class="'+(r.players>=r.max?"disabled":"gold")+' join" data-id="'+r.id+'" '+(r.players>=r.max?"disabled":"")+ '>'+(r.players>=r.max?"الغرفة ممتلئة":"انضم للغرفة")+'</button></article>';
+function render(){
+let content="";
+if(state.view==="home") content='<section class="hero"><div><span class="eyebrow">مملكة اللعب الجماعي</span><h1>الملوك</h1><p>منصة ألعاب اجتماعية جديدة، نبنيها من الصفر لتكون سريعة وجميلة ومصممة للعب الجماعي.</p><div class="actions"><button class="gold big" id="start">ابدأ اللعب</button><button class="ghost big" id="roomsBtn">استعرض الغرف</button></div></div><div class="crown">♛</div></section><section class="stats"><div><b>🎮</b><strong>غرف اللعب</strong><span>أنشئ أو انضم فوراً</span></div><div><b>👥</b><strong>اللعب الجماعي</strong><span>حتى 4 لاعبين</span></div><div><b>🃏</b><strong>طرنيب</strong><span>أول لعبة في الملوك</span></div></section><section class="section"><div class="title"><h2>الغرف المتاحة</h2></div><div class="room-grid">'+state.rooms.map(card).join("")+'</div></section>';
+if(state.view==="rooms") content='<section class="page"><div class="page-head"><div><span class="eyebrow">اللعب الآن</span><h1>غرف اللعب</h1><p>اختر غرفة مفتوحة أو أنشئ غرفة خاصة بك.</p></div><button id="create" class="gold big">＋ إنشاء غرفة</button></div><div class="room-grid">'+state.rooms.map(card).join("")+'</div></section>';
+if(state.view==="profile") content='<section class="page centered"><div class="profile-card"><div class="avatar">👑</div><span class="eyebrow">حساب الملوك</span><h1>'+(state.user||"ضيف")+'</h1><p>سجّل الدخول لحفظ ملفك وأصدقائك وغرفك وإحصائيات اللعب.</p><button id="profileLogin" class="gold big">'+(state.user?"تغيير الحساب":"تسجيل الدخول")+'</button></div></section>';
+app.innerHTML='<header class="top"><div class="brand">👑 <b>الملوك</b></div><nav><button id="homeBtn">الرئيسية</button><button id="navRooms">غرف اللعب</button><button id="navProfile">حسابي</button></nav><button id="loginBtn" class="gold">'+(state.user?"👤 "+state.user:"دخول / تسجيل")+'</button></header><main>'+content+'</main><footer>الملوك © 2026</footer>';
+document.querySelector("#homeBtn").onclick=()=>{state.view="home";render()};document.querySelector("#navRooms").onclick=()=>{state.view="rooms";render()};document.querySelector("#navProfile").onclick=()=>{state.view="profile";render()};document.querySelector("#loginBtn").onclick=login;
+document.querySelector("#roomsBtn")?.addEventListener("click",()=>{state.view="rooms";render()});document.querySelector("#start")?.addEventListener("click",()=>{state.view="rooms";render()});document.querySelector("#profileLogin")?.addEventListener("click",login);document.querySelector("#create")?.addEventListener("click",createRoom);document.querySelectorAll(".join").forEach(b=>b.onclick=()=>join(b.dataset.id));
+}
+function login(){const n=prompt("اكتب اسمك في الملوك:");if(n&&n.trim()){state.user=n.trim();render()}}
+function join(id){if(!state.user){login();if(!state.user)return}const r=state.rooms.find(x=>x.id===id);if(r&&r.players<r.max){r.players++;alert("انضممت إلى "+r.name);render()}}
+function createRoom(){if(!state.user){login();if(!state.user)return}const n=prompt("اسم الغرفة:","غرفة "+state.user);if(n&&n.trim()){state.rooms.unshift({id:"K"+(Math.floor(Math.random()*900)+100),name:n.trim(),game:"طرنيب",players:1,max:4});render()}}
+render();
