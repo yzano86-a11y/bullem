@@ -1,28 +1,8 @@
 {
-  "name": "bull-em",
-  "version": "1.0.0",
-  "description": "A real-time multiplayer bluffing card game combining Liar's Dice with poker hand rankings",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jvmarten/bullem.git"
-  },
-  "homepage": "https://bullem.cards",
-  "private": true,
-  "workspaces": [
-    "shared",
-    "server",
-    "client",
-    "training"
-  ],
-  "scripts": {
-    "dev": "npm run build -w shared && concurrently \"npm run dev -w server\" \"npm run dev -w client\"",
-    "build": "npm run build -w shared && node scripts/validate-cfr-strategy.mjs && npm run build -w server && npm run build -w client",
-    "test": "vitest run --workspace vitest.workspace.ts"
-  },
-  "devDependencies": {
-    "concurrently": "^9.1.0",
-    "typescript": "^5.7.0",
-    "vitest": "^3.0.0"
-  }
+  "name":"almolook",
+  "version":"0.1.0",
+  "private":true,
+  "type":"module",
+  "scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},
+  "devDependencies":{"vite":"^7.1.7"}
 }
