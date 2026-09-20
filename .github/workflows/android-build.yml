@@ -6,15 +6,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
-        with: { distribution: temurin, java-version: '17' }
-      - uses: android-actions/setup-android@v3
-      - name: Install Gradle 8.11.1
-        run: |
-          curl -L -o /tmp/gradle.zip https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
-          sudo unzip -q /tmp/gradle.zip -d /opt
-          echo /opt/gradle-8.11.1/bin >> $GITHUB_PATH
+        with:
+          distribution: temurin
+          java-version: '17'
       - name: Build APK
-        run: gradle :app:assembleDebug --no-daemon
+        run: |
+          chmod +x ./gradlew
+          ./gradlew :app:assembleDebug --no-daemon
       - uses: actions/upload-artifact@v4
         with:
           name: almolook-debug-apk
